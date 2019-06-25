@@ -9,7 +9,7 @@
 Javascript内のfilename,filetype,pagemaxを操作してください
 
 下記のようなルールでimgタグの参照ファイルが出力されます。
-> for(i=0;i<pagemax;i++){
->   imageout = filename + i + filetype
+> for(i=0;i<pagemax;i++){ \
+>   imageout = filename + i + filetype \
 > }
 

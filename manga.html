@@ -6,53 +6,103 @@
             var mide = [1];
             var righte = [2];
             var pagemax = 11;
+            var pagenow = 0;
             function onclickevent(num)
             {
                 switch(num){
                     case 0:
+                        nextpage(1)
                         break;
                     case 1:
                         break;
                     case 2:
+                        nextpage(-1)
                         break;
                     default:
                         break;
                 }
-                document.getElementById("output").innerHTML = num;
+                document.getElementById("output").innerHTML = num+" page:"+pagenow;
+            }
+            function nextpage(num){
+                pagenow += num;
+                if (pagenow>pagemax)
+                {
+                    pagenow=0;
+                }else if(pagenow<0){
+                    pagenow=pagemax;
+                }
+                var page0 = document.getElementsByClassName("pageI0")
+                var page1 = document.getElementsByClassName("pageI1")
+                for(var i=0;i<page0.length;i++)
+                {
+                    if(i==pagenow)
+                    {
+                        page0[i].style.display ="";
+                    }else{
+                        page0[i].style.display ="none";
+                    }
+                }
+                for(var i=0;i<page1.length;i++)
+                {
+                    if(i==pagenow+1)
+                    {
+                        page1[i].style.display ="";
+                    }else{
+                        page1[i].style.display ="none";
+                    }
+                }
             }
         </script>
         <style type="text/css">
             div.leftT{position: absolute;top: 0%;left: 0%; width: 20%;height: 100%;border:double;}
             div.midT{position: absolute;top: 0%;left: 20%; width: 60%;height: 100%;border:double;}
             div.rightT{position: absolute;top: 0%;left: 80%; width: 20%;height: 100%;border:double;}
-            div.page0{position: absolute;top:0%;left:5%;width:45%;border: ridge;height: 100%; text-align: right; /*background-color: red*/}
-            div.page1{position: absolute;top:0%;left:50%;width:45%;border: ridge;height: 100%; text-align: left; /*background-color: blue*/}
+            div.pageI0{position: absolute;top:0%;left:5%;width:45%;border: ridge;height: 100%; text-align: right; /*background-color: red*/}
+            div.pageI1{position: absolute;top:0%;left:50%;width:45%;border: ridge;height: 100%; text-align: left; /*background-color: blue*/}
             div.output{position: absolute;top:100%;left: 0%;}
-            img.page0{width: 100%;height: 100%; object-fit: contain;border: none;}
-            img.page1{width: 100%;height: 100%; object-fit: contain;border: none;}
+            img.page0{width: 80%;height:100%; object-fit: contain;border: none;}
+            img.page1{width: 80%;height:100%; object-fit: contain;border: none;}
         </style>
     </head>
-    <body>
+    <body><!--
         <div class="page0" >
-            <img class="page0" src="sample0.jpg" alt=""><br>
-            bb
+            <img class="page0" src="sample0.jpg" alt="">
         </div>
         <div class="page0"style="display: none">
-            <img class="page0" src="sample1.jpg" alt=""><br>
-            cc
+            <img class="page0" src="sample1.jpg" alt="">
         </div>
         <div class="page1" style="display: none">
-            <img class="page1" src="sample0.jpg" alt=""><br>
-            bb
+            <img class="page1" src="sample0.jpg" alt="">
         </div>
         <div class="page1">
-            <img class="page1" src="sample1.jpg" alt=""><br>
-            cc
-        </div>
+            <img class="page1" src="sample1.jpg" alt="">
+        </div>-->
         <script>
             var page0w = "";
             var page1w = "";
-            page0w = ""
+            for(var i=0;i<=pagemax;i++)
+            {
+                page0w += "<div class=\"pageI0\" id=\"page0_"+i+"\" ";
+                if(i==0){
+
+                }else{
+                    page0w += "style=\"display: none\"";
+                }
+                page0w += ">";
+                page0w += "<img class=\"page0\" src=\"sample"+i%3+".jpg\" alt=\"\">";
+                page0w +="</div>";
+                page1w += "<div class=\"pageI1\" id=\"page1_"+i+"\" ";
+                if(i==1){
+
+                }else{
+                    page1w += "style=\"display: none\"";
+
+                }
+                page1w += ">";
+                page1w += "<img class=\"page1\" src=\"sample"+i%3+".jpg\" alt=\"\">";
+                page1w +="</div>";
+            }
+            document.write(page0w+page1w)
         </script>
         <div class="leftT" name="clickA" onclick="onclickevent(lefte[0])"></div>
         <div class="midT" name="clickA" onclick="onclickevent(mide[0])"></div>

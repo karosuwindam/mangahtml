@@ -2,15 +2,16 @@
     <head>
         <title>マンガビューア</title>
         <script>
-            var filename="sample";
-            
-            var filetype=".jpg";
-            
+            //var filename="sample";
+            var filename="http:bookserver:3000//filelists/send_img?id=189&amp;page=";
+            //var filetype=".jpg";
+            filetype="";
             var lefte =[0];
-            var mide = [1];
+            var mide = [1,3,4];
             var righte = [2];
             var pagemax = 194;
             var pagenow = 0;
+            var modeonetwe = true;      //2 page view
             function onclickevent(num)
             {
                 switch(num){
@@ -23,13 +24,16 @@
                     case 2:
                         nextpage(-2)
                         break;
+                    case 3:
+                        chPageOneTwe(2);
+                        break;
                     default:
                         break;
                 }
                 document.getElementById("output").innerHTML = num+" page:"+pagenow;
             }
             function nextpage(num){
-                if(pagenow == 0)
+                if((pagenow == 0)||(!modeonetwe) )
                 {
                     if (num >0){
                         pagenow++;
@@ -58,7 +62,7 @@
                 }
                 for(var i=0;i<page1.length;i++)
                 {
-                    if((i==pagenow+1)&&(pagenow!=0))
+                    if((i==pagenow+1) && (pagenow!=0) && (modeonetwe))
                     {
                         page1[i].style.display ="";
                     }else{
@@ -66,10 +70,47 @@
                     }
                 }
             }
+            function chPageOneTwe(mode){
+                var page0 = document.getElementsByClassName("pageI0");
+                var page1 = document.getElementsByClassName("pageI1");
+                if(mode == 0){
+                    modeonetwe = false;
+                }else if(mode == 1){
+                    modeonetwe = true;
+                }else{
+                    modeonetwe = !modeonetwe;
+                }
+                if (modeonetwe){        //切り替え有効 2page
+                    for (var i = 0;i < page0.length ;i++){
+                        page0[i].style.left = "50%";
+                        page0[i].style.width = "45%";
+                        page0[i].style.textAlign = "left";
+                    }
+                    for (var i = 0;i < page1.length ;i++){
+                        if((i==pagenow+1)&&(pagenow!=0))
+                        {
+                            page1[i].style.display = ""
+                        }
+                    }
+                    
+                }else{      //1page 表示
+                    for (var i = 0;i < page0.length ;i++){
+                        page0[i].style.left = "5%";
+                        page0[i].style.width = "90%";
+                        page0[i].style.textAlign = "center";
+                    }
+                    for (var i = 0;i < page1.length ;i++){
+                        page1[i].style.display = "none"
+                    }
+                }
+
+            }
         </script>
         <style type="text/css">
             div.leftT{position: absolute;top: 0%;left: 0%; width: 20%;height: 100%;border:double;}
             div.midT{position: absolute;top: 0%;left: 20%; width: 60%;height: 100%;border:double;}
+            div.midM{position: absolute;top: 20%;left: 20%; width: 60%;height: 60%;border:double;}
+            div.midB{position: absolute;top: 80%;left: 20%; width: 60%;height: 20%;border:double;}
             div.rightT{position: absolute;top: 0%;left: 80%; width: 20%;height: 100%;border:double;}
             div.pageI0{position: absolute;top:0%;left:50%;width:45%;border: ridge;height: 100%; text-align: left; /*background-color: red*/}
             div.pageI1{position: absolute;top:0%;left:5%;width:45%;border: ridge;height: 100%; text-align: right; /*background-color: blue*/}
@@ -122,6 +163,8 @@
         </script>
         <div class="leftT" name="clickA" onclick="onclickevent(lefte[0])"></div>
         <div class="midT" name="clickA" onclick="onclickevent(mide[0])"></div>
+        <div class="midM" name="clickA" onclick="onclickevent(mide[1])"></div>
+        <div class="midB" name="clickA" onclick="onclickevent(mide[2])"></div>
         <div class="rightT" name="clickA" onclick="onclickevent(righte[0])"></div>
         <div class="output" id="output"></div>
     </body>
